@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+body,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #323437;
+  user-select: none;
+}
+
+.restartIcon:hover {
+  cursor: pointer;
+  background-color: #d1d0c5;
+}
+
+.restartIcon:active {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+.blinking-border {
+  display: inline-block; 
+  border-left: 3px solid transparent;
+  border-radius: 1px; 
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+      border-left-color: transparent; 
+  }
+  50% {
+      border-left-color: yellow; 
+  }
+}
