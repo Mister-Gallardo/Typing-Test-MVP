@@ -36,8 +36,8 @@ const RestartIcon = styled.img`
 const TextField = styled.input`
   opacity: 0;
   position: absolute;
-  left: 0,
-  top: 0,
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
 `;
@@ -163,23 +163,15 @@ const App = () => {
           }}
         >
           {getDisplayedText}
-          <input
+          <TextField
             autoFocus
             disabled={!isFocused}
             ref={inputRef}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             value={inputValue}
-            style={{
-              opacity: "0",
-              position: "absolute",
-              left: 0,
-              top: 0,
-              width: "100%",
-              height: "100%",
-            }}
             onChange={(e) => debouncedFunc(e.target.value)}
-          ></input>
+          ></TextField>
         </div>
         <div
           onClick={() => {
