@@ -46,3 +46,32 @@ export const WordsContent = styled.div`
   position: relative;
   margin: 170px auto;
 `;
+
+export const RestartIcon = styled.img`
+  margin: -50px auto 15px;
+  width: 30px;
+  border-radius: 25px;
+  padding: 1px 2px 4px;
+`;
+
+export const TextField = styled.input`
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+export const Typography = styled.p`
+  font-size: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: rgb(220, 220, 220);
+  font-family: "Roboto mono", sans-serif;
+`;
+
+export const Timer = styled.p`
+  font-size: 32px;
+  fontf-family: "Roboto Mono";
+`;

@@ -10,6 +10,10 @@ import {
   Logo,
   Title,
   WordsContent,
+  Typography,
+  TextField,
+  Timer,
+  RestartIcon
 } from "./styles/StylesInJs";
 import "./App.css";
 
@@ -26,30 +30,6 @@ const ArrayOfSentences = [
   "as we navigate lifes complexities it is essential to cultivate gratitude recognizing the abundance that exists even in challenging times when we shift our focus from what is lacking to what we have we open ourselves up to a world filled with possibilities each day presents opportunities for appreciation whether it’s savoring a warm cup of coffee witnessing a breathtaking sunset or cherishing moments spent with loved ones by practicing gratitude we cultivate a mindset that fosters positivity resilience and contentment allowing us to navigate life’s ups and downs with grace while finding joy in even the simplest of things far away in a distant land where mountains kissed the sky rivers flowed like silver ribbons through valleys lush greenery surrounded every corner creating an oasis of tranquility here lived an artist who found inspiration in natures beauty each stroke of her brush captured vibrant landscapes filled with colors emotions stories waiting to be told she spent hours wandering through meadows climbing hills exploring hidden nooks where wildflowers bloomed creating masterpieces that reflected her soul art became her language allowing her to express feelings thoughts dreams fears without uttering a single word she understood that creativity was not just about technique but rather about connecting deeply with oneself embracing vulnerability letting go of perfectionism allowing inspiration to flow freely like water cascading down rocks she believed that every creation held significance contributing to an ever-evolving narrative celebrating life love loss hope resilience reminding everyone who gazed upon her work that beauty exists even amidst chaos",
 ];
 
-const RestartIcon = styled.img`
-  margin: -50px auto 15px;
-  width: 30px;
-  border-radius: 25px;
-  padding: 1px 2px 4px;
-`;
-
-const TextField = styled.input`
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-`;
-
-const Typography = styled.p`
-  font-size: 20px;
-  text-align: center;
-  font-weight: 600;
-  color: rgb(220, 220, 220);
-  font-family: "Roboto mono", sans-serif;
-`;
-
 function Debounce(func: (newVal: string) => void, delay: number) {
   let id: number;
   return (newVal: string) => {
@@ -65,6 +45,7 @@ const symbolInFourSentences = Math.floor((window.innerWidth * 3.5) / 19.5);
 
 const App = () => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [textToType, setTextToType] = useState(
     () => ArrayOfSentences[Math.floor(Math.random() * 10)]
   );
@@ -74,6 +55,8 @@ const App = () => {
   const [isFocused, setIsFocused] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedFunc = useRef(Debounce(setInputValue, 10)).current;
+
+  const [timer, setTimer] = useState(30);
 
   const getDisplayedText = useMemo(() => {
     if (inputValue.length > symbolInFourSentences * (3 / 4)) {
@@ -114,9 +97,20 @@ const App = () => {
   }
 
   useEffect(() => {
+    let idInterval: number;
+    if (isTimerRunning) {
+      idInterval = setInterval(() => {
+        setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(idInterval);
+    };
+  }, [isTimerRunning]);
+
+  useEffect(() => {
     const handleKeyDown = () => {
-      // !isFocused && console.log('key', isFocused);
-      // FocusInput();
       setIsFocused(true);
     };
 
@@ -127,17 +121,6 @@ const App = () => {
     };
   }, []);
 
-  // function FocusInput() {
-  //   console.log(isFocused)
-  //   setIsFocused(true);
-  //   inputRef?.current?.focus();
-  // }
-
-  // function BlurInput() {
-  //   setIsFocused(false);
-  //   inputRef?.current?.blur();
-  // }
-
   useEffect(() => {
     if (isFocused) {
       inputRef?.current?.focus();
@@ -146,7 +129,7 @@ const App = () => {
     }
   }, [isFocused]);
 
-  console.log(isFocused);
+  // console.log('render');
   return (
     <Container>
       <Logo>
@@ -154,6 +137,22 @@ const App = () => {
         <Title>gallardotype</Title>
       </Logo>
       <WordsContent>
+        <div
+          style={{
+            marginBottom: "10px",
+            display: "flex",
+            gap: "10px",
+          }}
+        >
+          <img src="./clock-icon.svg"></img>
+          <Timer
+            style={{
+              color: isTimerRunning ? "#E2B714" : "rgb(160, 160, 160)",
+            }}
+          >
+            {timer}
+          </Timer>
+        </div>
         <div
           style={{
             transition: ".4s",
@@ -164,13 +163,18 @@ const App = () => {
         >
           {getDisplayedText}
           <TextField
+            type="text"
             autoFocus
+            autoComplete="off"
             disabled={!isFocused}
             ref={inputRef}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             value={inputValue}
-            onChange={(e) => debouncedFunc(e.target.value)}
+            onChange={(e) => {
+              setIsTimerRunning(true);
+              debouncedFunc(e.target.value);
+            }}
           ></TextField>
         </div>
         <div
