@@ -1,4 +1,5 @@
 #### `npm install` - для загрузки необходимых зависимостей
 #### `npm run dev` - для запуска клиента
 
-![image](https://github.com/user-attachments/assets/849a2e50-4e10-42c8-9fe3-4d68af698514)
+![image](https://github.com/user-attachments/assets/3229f8b0-3712-45c3-8c8d-ec7ee158847c)
+
