@@ -44,7 +44,7 @@ export const IncorrectChar = styled.p`
 
 export const WordsContent = styled.div`
   position: relative;
-  margin: 170px auto;
+  margin: 150px auto;
 `;
 
 export const RestartIcon = styled.img`
