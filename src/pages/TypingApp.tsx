@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import {
   Container,
-  CorrectChar,
-  DefaultChar,
-  IncorrectChar,
   Logo,
   Title,
   WordsContent,
